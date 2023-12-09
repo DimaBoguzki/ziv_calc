@@ -58,10 +58,11 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
                 value={inputs.h ?? ''}
                 onChange={e => inputs.onChangeHeight(Number(e.target.value))}
                 onClick={()=>inputs.onChangeHeight(undefined)}
+                sx={{direction:'ltr'}}
                 inputProps={{
-                  step: "0.1",
                   style: {
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    direction:'ltr'
                   }
                 }}
               />
@@ -73,11 +74,11 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
                 value={inputs.w ?? ''}
                 onClick={()=>inputs.onChangeWidth(undefined)}
                 onChange={e => inputs.onChangeWidth(Number(e.target.value))}
+                sx={{direction:'ltr'}}
                 inputProps={{
-                  step: "0.1",
                   style: {
                     textAlign: 'center',
-                    fontSize:16
+                    direction:'ltr'
                   }
                 }}
               />
