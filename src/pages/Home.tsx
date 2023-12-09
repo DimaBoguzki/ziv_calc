@@ -74,8 +74,8 @@ export default function Home() {
   },[ width, height, setting ])
   
   return (
-    <Stack flexGrow={1} overflow='hidden'>
-      <Stack flexGrow={1} overflow='auto' mt={2}>
+    <Stack flexGrow={1} overflow='auto' mt={2}>
+      <Stack flexGrow={1} >
         <AppTable
           header={['','גובה', 'רוחב']}
           rows={rows1}
