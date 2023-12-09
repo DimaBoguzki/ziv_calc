@@ -7,8 +7,8 @@ import AppTable from '../components/Table';
 
 export default function Home() {
   const { setting } = useSetting();
-  const [ width, setWidth ] = useState<number>(1);
-  const [ height, setHeight ] = useState<number>(1);
+  const [ width, setWidth ] = useState<number | undefined>(undefined);
+  const [ height, setHeight ] = useState<number | undefined>(undefined);
 
   const rows1=useMemo<Array<{name:string, w:number, h:number}>>(()=>{
     return [
@@ -19,13 +19,13 @@ export default function Home() {
       },
       {
         name:'מידות סופיות', 
-        w: width + setting.fixed_addition.width, 
-        h: height + setting.fixed_addition.height
+        w: (width ?? 0) + setting.fixed_addition.width, 
+        h: (height ?? 0 )+ setting.fixed_addition.height
       },
       {
         name:'מידות לחישוב תריס ', 
-        w: width-0.1, 
-        h: height-0.15
+        w: (width ?? 0)-0.1, 
+        h: (height ?? 0)-0.15
       },
     ]
   },[ width, height, setting ]);
@@ -33,7 +33,7 @@ export default function Home() {
   const rows2=useMemo<Array<{name:string, w:number, h:number}>>(()=>{
     return [{
       name:'מידת אורך ל U', 
-      h: height-0.2,
+      h: (height ?? 0)-0.2,
       w: 0, 
     }]
   },[height]);
@@ -43,7 +43,7 @@ export default function Home() {
       {
         name:'ארגז', 
         h: setting.box,
-        w: setting.box * (width + setting.fixed_addition.width), 
+        w: setting.box * ((width ?? 0) + setting.fixed_addition.width), 
       },
       {
         name:'בקים', 
@@ -53,12 +53,12 @@ export default function Home() {
       {
         name:'Ux2', 
         h: setting.ux2,
-        w: (setting.ux2 * (height-0.2)) * 2
+        w: (setting.ux2 * ((height ?? 0)-0.2)) * 2
       },
       {
         name:'וול', 
         h: setting.vol,
-        w: setting.vol * (width + setting.fixed_addition.width)
+        w: setting.vol * ((width ?? 0) + setting.fixed_addition.width)
       },
       {
         name:'מנוע', 
@@ -68,25 +68,13 @@ export default function Home() {
       {
         name:'תריס אור', 
         h: setting.trisor,
-        w: setting.trisor * (width - 0.1) * (height-0.15)
+        w: setting.trisor * ((width ?? 0) - 0.1) * ((height ?? 0)-0.15)
       },
     ]
   },[ width, height, setting ])
+  
   return (
-    <Stack flexGrow={1} overflow='hidden' >
-      <Box
-        sx={{
-          display:'flex',
-          alignItems:'center',
-          justifyContent:'center',
-          boxShadow:theme=>theme.shadows[1],
-          py:2,
-        }}
-      >
-        <Typography variant='h4' color='text.primary' textAlign='center'>
-          מחשבון
-        </Typography>
-      </Box>
+    <Stack flexGrow={1} overflow='hidden'>
       <Stack flexGrow={1} overflow='auto' mt={2}>
         <AppTable
           header={['','גובה', 'רוחב']}
@@ -110,21 +98,23 @@ export default function Home() {
             notDisplayZero
           />
         </Stack>
-        <Box 
-          display='flex' 
-          alignItems='center' 
-          columnGap={3} 
-          p={1} 
-          sx={{background:theme=>theme.palette.success.light}}
-        >
-          <Typography variant='body1' color='text.primary'>
-            סה"כ:
-          </Typography>
-          <Typography variant='body1' color='text.secondary'>
-            {rows3.reduce((acc, x)=>acc+x.w, 0).toFixed(2)}
-          </Typography>
-        </Box>
       </Stack>
+      <Box 
+        display='flex' 
+        alignItems='center' 
+        justifyContent='space-between'
+        columnGap={3} 
+        py={1}
+        px={2} 
+        sx={{background:theme=>theme.palette.success.light}}
+      >
+        <Typography variant='body1' color='text.primary'>
+          סה"כ:
+        </Typography>
+        <Typography variant='body1' color='text.secondary' fontWeight={600}>
+          {rows3.reduce((acc, x)=>acc+x.w, 0).toFixed(2)}
+        </Typography>
+      </Box>
     </Stack>
   );
 }

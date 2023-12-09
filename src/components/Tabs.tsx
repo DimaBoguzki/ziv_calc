@@ -47,11 +47,10 @@ function AppTab() {
       position='relative'
       overflow='auto'
       height='100vh'
+      py={2}
       sx={{
         overflowX:'hidden',
         background:theme=>theme.palette.background.default,
-        border:theme=>`1px solid ${theme.palette.divider}`,
-        boxShadow:theme=>theme.shadows[1],
       }}
     >
       <TabPanel index={0} value={tab}>

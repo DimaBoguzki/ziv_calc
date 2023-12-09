@@ -5,7 +5,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   TextField,
   Typography
 } from '@mui/material';
@@ -16,14 +15,14 @@ type AppTableProps = {
   notDisplayZero?:boolean
   rows:Array<{
     name:string,
-    w:number,
-    h:number
+    w:number | undefined,
+    h:number | undefined
   }>,
   inputs?:{
-    onChangeWidth: (w:number) => void,
-    onChangeHeight: (h:number) => void
-    w:number,
-    h:number
+    onChangeWidth: (w:number | undefined) => void,
+    onChangeHeight: (h:number | undefined) => void
+    w:number | undefined,
+    h:number | undefined
   }
 }
 
@@ -56,21 +55,24 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
               <TextField
                 type='number'
                 size='small'
-                value={inputs.h}
+                value={inputs.h ?? ''}
+                onChange={e => inputs.onChangeHeight(Number(e.target.value))}
+                onClick={()=>inputs.onChangeHeight(undefined)}
                 inputProps={{
                   step: "0.1",
                   style: {
                     textAlign: 'center'
                   }
                 }}
-                onChange={e => inputs.onChangeHeight(Number(e.target.value))}
               />
             </TableCell>
             <TableCell align="center">
               <TextField
                 type='number'
                 size='small'
-                value={inputs.w}
+                value={inputs.w ?? ''}
+                onClick={()=>inputs.onChangeWidth(undefined)}
+                onChange={e => inputs.onChangeWidth(Number(e.target.value))}
                 inputProps={{
                   step: "0.1",
                   style: {
@@ -78,7 +80,6 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
                     fontSize:16
                   }
                 }}
-                onChange={e => inputs.onChangeWidth(Number(e.target.value))}
               />
             </TableCell>
           </TableRow>
@@ -93,14 +94,14 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
               {notDisplayZero && row.h == 0 ? null : (
                 <TableCell align={notDisplayZero ? 'right' : "center"} >
                   <Typography variant='body2' color='text.secondary' >
-                    {row.h.toFixed(row.h % 1 === 0 ? 0 : 2)}
+                    {(row.h ?? 0).toFixed((row.h ?? 0) % 1 === 0 ? 0 : 2)}
                   </Typography>
                 </TableCell>
               )}
               {notDisplayZero && row.w == 0 ? null : (
                 <TableCell align={notDisplayZero ? 'right' : "center"} >
                   <Typography variant='body2' color='text.secondary' >
-                    {row.w.toFixed(row.w % 1 === 0 ? 0 : 2)}
+                    {(row.w ?? 0).toFixed((row.w ?? 0) % 1 === 0 ? 0 : 2)}
                   </Typography>
                 </TableCell>
               )}
