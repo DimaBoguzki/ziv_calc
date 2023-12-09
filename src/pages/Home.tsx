@@ -7,8 +7,8 @@ import AppTable from '../components/Table';
 
 export default function Home() {
   const { setting } = useSetting();
-  const [ width, setWidth ] = useState<number | undefined>(undefined);
-  const [ height, setHeight ] = useState<number | undefined>(undefined);
+  const [ width, setWidth ] = useState<string >('');
+  const [ height, setHeight ] = useState<string >('');
 
   const rows1=useMemo<Array<{name:string, w:number, h:number}>>(()=>{
     return [
@@ -19,13 +19,13 @@ export default function Home() {
       },
       {
         name:'מידות סופיות', 
-        w: (width ?? 0) + setting.fixed_addition.width, 
-        h: (height ?? 0 )+ setting.fixed_addition.height
+        w: (Number(width) ?? 0) + setting.fixed_addition.width, 
+        h: (Number(height) ?? 0 )+ setting.fixed_addition.height
       },
       {
         name:'מידות לחישוב תריס ', 
-        w: (width ?? 0)-0.1, 
-        h: (height ?? 0)-0.15
+        w: (Number(width) ?? 0)-0.1, 
+        h: (Number(height) ?? 0)-0.15
       },
     ]
   },[ width, height, setting ]);
@@ -33,7 +33,7 @@ export default function Home() {
   const rows2=useMemo<Array<{name:string, w:number, h:number}>>(()=>{
     return [{
       name:'מידת אורך ל U', 
-      h: (height ?? 0)-0.2,
+      h: (Number(height)?? 0)-0.2,
       w: 0, 
     }]
   },[height]);
@@ -43,7 +43,7 @@ export default function Home() {
       {
         name:'ארגז', 
         h: setting.box,
-        w: setting.box * ((width ?? 0) + setting.fixed_addition.width), 
+        w: setting.box * ((Number(width) ?? 0) + setting.fixed_addition.width), 
       },
       {
         name:'בקים', 
@@ -53,12 +53,12 @@ export default function Home() {
       {
         name:'Ux2', 
         h: setting.ux2,
-        w: (setting.ux2 * ((height ?? 0)-0.2)) * 2
+        w: setting.ux2 * ((Number((height) ?? 0)-0.2)) * 2
       },
       {
         name:'וול', 
         h: setting.vol,
-        w: setting.vol * ((width ?? 0) + setting.fixed_addition.width)
+        w: setting.vol * ((Number(width) ?? 0) + setting.fixed_addition.width)
       },
       {
         name:'מנוע', 
@@ -68,7 +68,7 @@ export default function Home() {
       {
         name:'תריס אור', 
         h: setting.trisor,
-        w: setting.trisor * ((width ?? 0) - 0.1) * ((height ?? 0)-0.15)
+        w: setting.trisor * ((Number(width) ?? 0) - 0.1) * (Number((height) ?? 0)-0.15)
       },
     ]
   },[ width, height, setting ])
@@ -80,8 +80,8 @@ export default function Home() {
           header={['','גובה', 'רוחב']}
           rows={rows1}
           inputs={{
-            onChangeWidth: e => setWidth(e),
-            onChangeHeight: e => setHeight(e),
+            onChangeWidth: e => setWidth(e ??''),
+            onChangeHeight: e => setHeight(e??''),
             w: width,
             h: height,
           }}

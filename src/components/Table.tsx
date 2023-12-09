@@ -19,10 +19,10 @@ type AppTableProps = {
     h:number | undefined
   }>,
   inputs?:{
-    onChangeWidth: (w:number | undefined) => void,
-    onChangeHeight: (h:number | undefined) => void
-    w:number | undefined,
-    h:number | undefined
+    onChangeWidth: (w:string | undefined) => void,
+    onChangeHeight: (h:string | undefined ) => void
+    w:string,
+    h:string
   }
 }
 
@@ -56,13 +56,10 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
                 type='number'
                 size='small'
                 value={inputs.h ?? ''}
-                onChange={e => inputs.onChangeHeight(Number(e.target.value))}
-                onClick={()=>inputs.onChangeHeight(undefined)}
+                onChange={e => inputs.onChangeHeight(e.target.value)}
+                onClick={()=>inputs.onChangeHeight('')}
                 sx={{direction:'ltr'}}
                 inputProps={{
-                  min:"0",
-                  inputmode:"numeric",
-                  pattern:"[0-9]*",
                   style: {
                     textAlign: 'center',
                     direction:'ltr'
@@ -75,13 +72,10 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
                 type='number'
                 size='small'
                 value={inputs.w ?? ''}
-                onClick={()=>inputs.onChangeWidth(undefined)}
-                onChange={e => inputs.onChangeWidth(Number(e.target.value))}
+                onClick={()=>inputs.onChangeWidth('')}
+                onChange={e => inputs.onChangeWidth(e.target.value)}
                 sx={{direction:'ltr'}}
                 inputProps={{
-                  min:"0",
-                  inputmode:"numeric",
-                  pattern:"[0-9]*",
                   style: {
                     textAlign: 'center',
                     direction:'ltr'
