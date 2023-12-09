@@ -60,6 +60,8 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
                 onClick={()=>inputs.onChangeHeight(undefined)}
                 sx={{direction:'ltr'}}
                 inputProps={{
+                  step: 'any',
+                  pattern: '^\\d*\\.?\\d*$',
                   style: {
                     textAlign: 'center',
                     direction:'ltr'
@@ -76,6 +78,8 @@ export default function AppTable({rows, header, inputs, notDisplayZero }: AppTab
                 onChange={e => inputs.onChangeWidth(Number(e.target.value))}
                 sx={{direction:'ltr'}}
                 inputProps={{
+                  step: 'any',
+                  pattern: '^\\d*\\.?\\d*$',
                   style: {
                     textAlign: 'center',
                     direction:'ltr'
